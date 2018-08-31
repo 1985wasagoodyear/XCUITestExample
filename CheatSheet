@@ -1,0 +1,104 @@
+
+XCUITest Cheat Sheet
+for XCode 9.4.1
+August 31, 2018
+
+
+******************************
+OVERVIEW:
+******************************
+
+Add XCUITests to your project.
+Obtain UI elements as XCUIElement's from XCUIApplication()
+Use XCTest's XCAssert methods to check UI elements' properties, values, etc.
+
+Can record actions to help perform tests.
+Each test-function starts up a new instance of the app to test with
+
+
+******************************
+Technical Notes:
+******************************
+
+No import!
+Works externally, checks what is currently available on the phone/simulator.
+As a result, can only perform UI-based actions (no access to classes/methods/etc)
+All test methods must begin with "test" prefix
+
+Can be somewhat inconsistent for tasks like:
+    -using sliders
+    -scrolling to individual cells
+    -sometimes just won't work, grab wrong items, etc
+    -nested items can be difficult
+
+
+******************************
+Storyboard
+******************************
+
+Can set up Accessibility options and properties for easier access with UITests.
+
+
+******************************
+Some Gestures:
+******************************
+tap
+doubleTap
+twoFingerTap
+tapWithNumberOfTaps:numberOfTouches:
+pressForDuration:
+pressForDuration:thenDragToElement:
+swipeUp
+swipeDown
+swipeLeft
+swipeRight
+
+
+******************************
+Keyboards:
+******************************
+typeText:
+(can also use .tap() on keyboard keys)
+
+
+******************************
+Expectations:
+******************************
+
+* XCTNSNotificationExpectation: (for notifications)
+let expectation = XCTNSNotificationExpectation(name: Notification.Name("MyNotification"))
+
+* XCTNSPredicateExpectation: (for predicates)
+let expectation = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == true"), object: xCUIElement)
+
+* wait for expectations: (pass in array of expectations and some timeout)
+wait(for: [expectation1, expectation2], timeout: TimeInterval(timeoutValue))
+
+* wait for a single expectation: (alternative)
+expectation(for: predicate, evaluatedWith: xCUIElement, handler: nil)
+
+* XCTWaiter:
+doesn't fail the app, has several return values to let the user know the result of the expectation
+
+******************************
+Links and Resources:
+******************************
+
+* Getting started with XCUITest framework for testing iOS apps.
+https://blog.novoda.com/getting-started-with-xcuitest-framework-for-testing-ios-apps/
+
+* Waits in XCUITest
+https://alexilyenko.github.io/xcuitest-waiting/
+
+* How to get index of XCUIElement in XCUIElementQuery?
+https://stackoverflow.com/questions/32164956/how-to-get-index-of-xcuielement-in-xcuielementquery
+
+* A Guide to XCode UI Test
+https://metova.com/a-guide-to-xcode-ui-test/
+
+* Adding UI Testing to an existing iOS App
+https://medium.com/imgur-engineering/adding-ui-testing-to-an-existing-ios-app-e0e440ca213d
+
+* how to get value of an XCUIElement?
+(setting Accessibility properties in a Storyboard)
+https://stackoverflow.com/questions/31841753/how-to-get-value-of-an-xcuielement
